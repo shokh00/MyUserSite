@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arimo', sans-serif;
+}
+
+a,
+li,
+button,
+input {
+    cursor: pointer;
+    outline: none;
+}
+
+.drop__item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.st0 {
+    fill: #a6a6a6
+}
+
+.st1 {
+    stroke: #ffffff;
+    stroke-width: .2;
+    stroke-miterlimit: 10
+}
+
+.st1,
+.st2 {
+    fill: #fff
+}
+
+.st3 {
+    fill: url(#SVGID_1_)
+}
+
+.st4 {
+    fill: url(#SVGID_2_)
+}
+
+.st5 {
+    fill: url(#SVGID_3_)
+}
+
+.st6 {
+    fill: url(#SVGID_4_)
+}
+
+.st7,
+.st8,
+.st9 {
+    opacity: .2;
+    enable-background: new
+}
+
+.st8,
+.st9 {
+    opacity: .12
+}
+
+.st9 {
+    opacity: .25;
+    fill: #fff
+}
+
+.slick-track {
+    display: flex;
+    gap: 1rem;
+}

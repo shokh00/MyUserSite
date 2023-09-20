@@ -19,6 +19,7 @@ export const Navbar = styled.div`
     top: 0;
     z-index: 3;
     background-color: white;
+    border-bottom: 1px solid lightgray;
 
     .footer {
         width: 100%;
@@ -128,15 +129,12 @@ export const Cart__Button = styled.button`
         display: flex;
         align-items:center;
         gap: 7px;
-        font-size: 14px;  
+        font-size: 14px;
 
-        ${(props) =>
-        props.cart &&
-        `
-                background: green;
-                color: white;
-            `
-    }
+        &.full {
+            background-color: green;
+            color: white;
+        }
 `
 
 // Footer
@@ -335,6 +333,97 @@ export const Drawer__Head = styled.div`
 export const Drawer__Body = styled.div`
     display: flex;
     flex-direction: column;
+    height: 100%;
+    margin: 10px 0 0 0;
+
+    .drawerDiv {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .img {
+            display: flex;
+            gap: 10px;
+            img {
+                height: 115px;
+                width: 115px;
+                object-fit: contain;
+            }
+        }
+
+
+        svg {
+            &:hover {
+                animation: shake 0.75s linear 1;
+                color: red;
+
+                    @keyframes shake {
+                            10% {
+                                transform: translateX(3px) rotate(2deg);
+                            }
+
+                            20% {
+                                transform: translateX(-3px) rotate(-2deg);
+                            }
+
+                            30% {
+                                transform: translateX(3px) rotate(2deg);
+                            }
+
+                            40% {
+                                transform: translateX(-3px) rotate(-2deg);
+                            }
+
+                            50% {
+                                transform: translateX(2px) rotate(1deg);
+                            }
+
+                            60% {
+                                transform: translateX(-2px) rotate(-1deg);
+                            }
+
+                            70% {
+                                transform: translateX(2px) rotate(1deg);
+                            }
+
+                            80% {
+                                transform: translateX(-2px) rotate(-1deg);
+                            }
+
+                            90% {
+                                transform: translateX(1px) rotate(0);
+                            }
+
+                            100% {
+                                transform: translateX(-1px) rotate(0);
+                            }
+}
+            }
+        }
+
+        .productInfo {
+            display: flex;
+            flex-direction: column;
+            padding: 0 0 0 10px;
+
+            p {
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                padding: 0 10px 0 0;
+                margin: 7px 0 0 0;
+            }
+        }
+        .endInfo {
+            text-align: center;
+            gap: 20px;
+
+            h3 {
+                margin: 0 0 7px 0;
+            }
+        }
+    }
 `;
 
 export const Drawer__Footer = styled.div`
@@ -355,15 +444,30 @@ export const Drawer__Footer = styled.div`
         background-color: #19A555;
         border: 0;
         font-size: 15px;
-        padding: 10px 0;
+        padding: 20px 0;
         color: white;
         border-radius: 3px;
+        transition: 150ms;
+
+        &:hover {
+           background-color:rgba(25, 165, 85, 0.85)
+        }
     }
 `;
 
-export const Opposite = styled.div`
-    
-`;
+export const ArrowsDiv = styled.div`
+    text-align: center;
+    margin-top: 10px;
+
+    button {
+        border-radius: 50%;
+        border: 0;
+        padding: 10px;
+        margin: 0 10px;
+        background-color: white;
+        box-shadow: 0 4.4px 12px -1px rgba(19,16,34,.06), 0 2px 6.4px -1px rgba(19,16,34,.03);
+    }
+`
 
 // Modal 
 

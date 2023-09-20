@@ -39,9 +39,11 @@ const items = [
 ];
 
 export default function Layout() {
-    const { openDrawer } = useSelector(state => state.slices);
-    const cart = useState(JSON.parse(localStorage.getItem("cart")));
+    const { openDrawer , cart} = useSelector(state => state.slices);
+    // const cart = useState(JSON.parse(localStorage.getItem("cart")));
     const dispatch = useDispatch();
+
+    console.log(cart.length);
 
     return (
         <>
@@ -58,7 +60,7 @@ export default function Layout() {
                     </ul>
                 </Navbar__About>
                 <Navbar__Profile>
-                    <Cart__Button cart={cart.length} onClick={() => dispatch(updateState({ openDrawer: true }))}>
+                    <Cart__Button className={cart.length ? "full" : ""} onClick={() => dispatch(updateState({ openDrawer: true }))}>
                         <ShoppingOutlined /> Корзина
                     </Cart__Button>
                     <Dropdown

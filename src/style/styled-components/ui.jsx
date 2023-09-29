@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 export const Container = styled.div`
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -21,9 +22,14 @@ export const Navbar = styled.div`
     background-color: white;
     border-bottom: 1px solid lightgray;
 
+    img {
+        object-fit: cover;
+        cursor: pointer;
+    }
+
     .footer {
         width: 100%;
-        height: 100% !important;
+        height: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -139,13 +145,67 @@ export const Cart__Button = styled.button`
 
 // Footer
 
-export const Footer = Navbar;
-export const Footer__About = Navbar__About;
+export const Footer = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    width: 100%;
+    z-index: 2;
+    background-color: white;
+    padding: 10px 75px;
+    border-top: 1px solid lightgray; 
+
+    @media screen and (max-width: 900px) {
+        padding: 15px 5px;
+    }
+
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+`;
+
+export const Footer__About = styled.div`
+    ul {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+
+        @media screen and (max-width: 719px) {
+            display: none;
+        }
+
+        li {
+            font-size: 13px;
+            position: relative;
+            font-weight: 600;
+
+            &::before {
+                content: "";
+                width: 100%;
+                height: 3px;
+                transform: scaleX(0);
+                position: absolute;
+                bottom: -3px;
+                left: 0;
+                background-color: blue;
+                transition: 200ms;
+            }
+            
+            &:hover {
+                &::before {
+                    transform: scaleX(0.5);
+                }
+            }
+        }
+    }
+`;
 export const Line = styled.div`
     width: 100%;
     height: 1px;
     background-color: lightgray;
-    margin-top: 25px;
+    margin-top: 15px;
 `
 
 // Content
@@ -165,12 +225,20 @@ export const ContactUs = styled.div`
 `;
 
 export const Content = styled.div`
-    width: 100%;
-    height: 100%;
     background-color: #F6F8F9;
     padding: 0px 75px;
-`;
+    height: 100%;
 
+    @media screen and (max-width: 900px) {
+        padding: 0 5px;
+    }
+
+    .oneProduct {
+        width: 100%;
+        height: 70vh;
+        border: 1px solid red;
+    }
+`;
 export const Title = styled.div`
     width: 100%;
     text-align: center;
@@ -187,11 +255,22 @@ export const CarouselDiv = styled.div`
     background-color: white;
     margin-bottom: 10px;
     border-radius: 6px;
+    overflow: hidden;
+    transition: 300ms;
+
+    &:hover {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 25px 0px;
+    }
 
     img {
         width: 100%;
         height: 200px;
         object-fit: contain;
+        transition: 300ms;
+
+        &:hover {
+            scale: 1.03;
+        }   
     }
     h2 {
         width: 100%;
@@ -214,7 +293,7 @@ export const CarouselDiv = styled.div`
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
     }
-    button {
+    .cart-btn {
         width: 100%;
         margin: 15px 0 0 0;
         padding: 10px 0;
@@ -224,8 +303,36 @@ export const CarouselDiv = styled.div`
         border-radius: 3px;
         transition: 200ms;
 
+        &.cart-active-button {
+            background-color: green;
+        }
+
         &:hover {
             background-color: yellow;
+        }
+    }
+    .counter {
+        margin-top: 15px;
+        height: 45px;
+        width: 100%;
+
+        border: 0;
+        background-color: #F6F8F9;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .icon {
+            width: 20%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            border-radius: 6px;
+
+            &:hover {
+                background-color: gold;
+            }
         }
     }
 `;
@@ -248,13 +355,20 @@ export const Block = styled.div`
 
         @media screen and (max-width: 1100px) {
             width: 50%;
-            &:nth-child(1),
-            &:nth-child(3),
-            &:nth-child(5) {border-right: 1px solid lightgray !important    }
+            border: 0;
+
+            &:nth-child(5) {
+                border-top: 1px solid lightgray;
+            }
         }
         @media screen and (max-width: 700px) {
             width: 100%;
             border: 0;
+
+            border-right: 0 !important;
+            border-left: 0 !important;
+            border-top: 0 !important;
+            border-bottom: 1px solid lightgray !important;
         }
 
         &:hover {
@@ -310,7 +424,7 @@ export const Drawer__Content = styled.div`
     height: 100%;
 
     .hr {
-        border: 0.3px solid lightgray;
+        border-bottom: 1px solid lightgray;
     }
 `;
 
@@ -335,6 +449,8 @@ export const Drawer__Body = styled.div`
     flex-direction: column;
     height: 100%;
     margin: 10px 0 0 0;
+
+    img , h4 , h3 , p { user-select: none; }
 
     .drawerDiv {
         display: flex;

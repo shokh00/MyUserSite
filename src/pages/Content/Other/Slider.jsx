@@ -2,14 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { ArrowsDiv, CarouselDiv } from "../../../style/styled-components/ui";
 import Slider from "react-slick";
 import { useState } from "react";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { LeftOutlined, MinusOutlined, PlusOutlined, RightOutlined } from "@ant-design/icons";
 import { updateState } from "../../../redux/slices";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function CustomSlider() {
     const dispatch = useDispatch();
-    const { products, store , cart } = useSelector(state => state.slices);
+    const { products, store, cart, total } = useSelector(state => state.slices);
     const innerWidth = window.innerWidth;
     const [customArrow, setCustomArrow] = useState({ slickNext: null, slickPrev: null });
+    const navigate = useNavigate();
 
     function addToCart(selectProduct) {
         let modCard = cart;
@@ -33,6 +36,23 @@ function CustomSlider() {
         console.log(cart);
     }
 
+    const checkTotal = () => {
+        const total = cart.length ? cart.reduce(
+            (total, cartItem) => {
+                const { price, stock } = cartItem;
+                total.cartTotal += stock * price;
+                return total;
+            },
+            {
+                totalItems: 0,
+                cartTotal: 0
+            }
+        ) : ""
+        dispatch(updateState({ total: total }))
+    }
+
+    console.log(total);
+
     const settings = {
         dots: false,
         infinite: true,
@@ -46,8 +66,8 @@ function CustomSlider() {
         <>
             <Slider {...settings} ref={c => setCustomArrow(c)}>
                 {products.map(item => (
-                    <CarouselDiv>
-                        <img src={item.image} alt="..." />
+                    <CarouselDiv key={item.id}>
+                        <img src={item.image} alt="..." onClick={() => navigate(`/product/${item.id}`)} />
                         <h2>
                             {item.productName}
                         </h2>
@@ -57,9 +77,18 @@ function CustomSlider() {
                         <h2 className='price'>
                             {new Intl.NumberFormat().format(item.price)} {store.currency}
                         </h2>
-                        <button onClick={() => addToCart(item)}>
-                            В корзину
-                        </button>
+                        {cart.findIndex(p => p.id == item.id) != -1 ? <button className="counter">
+                            <MinusOutlined className="icon" />
+                            1
+                            <PlusOutlined className="icon" />
+                        </button> : <>
+                            <button onClick={() => {
+                                addToCart(item);
+                                checkTotal();
+                            }} className="cart-btn">
+                                В корзину
+                            </button>
+                        </>}
                     </CarouselDiv>
                 ))}
             </Slider>

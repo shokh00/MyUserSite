@@ -13,7 +13,7 @@ import CustomModal from './Other/Modal';
 import ButtonGroup from 'antd/es/button/button-group';
 
 export default function Home() {
-    const { openDrawer, openModal, cart } = useSelector(state => state.slices);
+    const { openDrawer, openModal, cart, store } = useSelector(state => state.slices);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -21,14 +21,28 @@ export default function Home() {
         dispatch(getStoreSetting());
     }, []);
 
-    const deleteOne = id => {
-        const newCart = cart.findIndex(i => i.id !== id);
+    const Plus = (id) => {
+        let modCart = cart.map((i, index) => {
+            if (i.id === id)
+                i = { ...i, quantity: i.quantity + 1 }
+            return i
+        });
+        dispatch(updateState({ cart: modCart }));
+    };
 
-        console.log(newCart);
-    }
+    const Minus = (id) => {
+        let modCart = cart.map((i, index) => {
+            if (i.id === id)
+                i = { ...i, quantity: i.quantity - 1 }
+            return i
+        });
+        dispatch(updateState({ cart: modCart }));
+    };
+
+    console.log(cart);
 
     return (
-        <>
+        <div>
             <Title>
                 <h1>
                     Хиты Продаж
@@ -41,7 +55,15 @@ export default function Home() {
                 </h1>
             </Title>
             <CustomBlock />
-            <Drawer placement="right" zIndex={5} closeIcon={<CloseOutlined />} width={500} open={openDrawer} onClose={() => dispatch(updateState({ openDrawer: !openDrawer }))}>
+            <Drawer footer={
+                <Drawer__Footer>
+                    <div>
+                        <h1>Итого</h1>
+                        <h1>{Intl.NumberFormat().format(cart.reduce((acc, curr) => acc += (curr.quantity * curr.price), 0))} {store.currency}</h1>
+                    </div>
+                    <button onClick={() => dispatch(updateState({ openModal: !openModal }))} disabled={!cart.length}>Оформить заказ</button>
+                </Drawer__Footer>
+            } placement="right" zIndex={5} closeIcon={<CloseOutlined />} width={500} open={openDrawer} onClose={() => dispatch(updateState({ openDrawer: !openDrawer }))}>
                 <Drawer__Content>
                     <div>
                         <Drawer__Head>
@@ -54,11 +76,11 @@ export default function Home() {
                         <div className='hr' />
                         <Drawer__Body>
                             {
-                                cart.map(item => {
+                                cart.map((item, index) => {
                                     return (
-                                        <div className="drawerDiv">
+                                        <div className="drawerDiv" key={index}>
                                             <div className='img'>
-                                                <DeleteOutlined onClick={() => deleteOne(item.id)} />
+                                                <DeleteOutlined onClick={() => dispatch(updateState({ cart: cart.filter(cartId => cartId.id != item.id) }))} />
                                                 <img src={item.image} alt="" />
                                             </div>
                                             <div className='productInfo'>
@@ -66,11 +88,11 @@ export default function Home() {
                                                 <p>{item.description}</p>
                                             </div>
                                             <div className='endInfo'>
-                                                <h3>19 000 сум</h3>
+                                                <h3>{Intl.NumberFormat().format(item.price * item.quantity)} {store.currency}</h3>
                                                 <ButtonGroup style={{ alignItems: "center" }}>
-                                                    <Button icon={<MinusOutlined />} />
-                                                    <Button> 1 </Button>
-                                                    <Button icon={<PlusOutlined />} />
+                                                    <Button onClick={() => Minus(item.id)} icon={<MinusOutlined />} />
+                                                    <Button> {item.quantity} </Button>
+                                                    <Button onClick={() => Plus(item.id)} icon={<PlusOutlined />} />
                                                 </ButtonGroup>
                                             </div>
                                         </div>
@@ -79,16 +101,10 @@ export default function Home() {
                             }
                         </Drawer__Body>
                     </div>
-                    <Drawer__Footer>
-                        <div>
-                            <h1>Итого</h1>
-                            <h1>19 000 сум</h1>
-                        </div>
-                        <button onClick={() => dispatch(updateState({ openModal: !openModal }))} disabled={!cart.length}>Оформить заказ</button>
-                    </Drawer__Footer>
+
                 </Drawer__Content>
             </Drawer>
             <CustomModal />
-        </>
+        </div>
     )
 }

@@ -7,7 +7,8 @@ const slice = createSlice({
         openDrawer: false,
         openModal: false,
         store: [],
-        cart: []
+        cart: [],
+        total: 0
     },
     reducers: {
         updateState: (state, action) => {

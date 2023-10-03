@@ -1,5 +1,5 @@
 import { Footer, Footer__About, Navbar, Navbar__About, Navbar__Profile, Line, ContactUs, Content, Cart__Button } from '../style/styled-components/ui'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import * as Icons from "../icons/index";
 import { UserOutlined, ShoppingOutlined, DownOutlined, InstagramOutlined, FacebookOutlined, SendOutlined } from '@ant-design/icons';
 import { Dropdown } from 'antd';
@@ -39,19 +39,20 @@ const items = [
 ];
 
 export default function Layout() {
-    const { openDrawer , cart} = useSelector(state => state.slices);
+    const { openDrawer, cart, store: {currency , image} } = useSelector(state => state.slices);
     // const cart = useState(JSON.parse(localStorage.getItem("cart")));
     const dispatch = useDispatch();
+    const navigation = useNavigate();
 
-    console.log(cart.length);
+    console.log(currency);
 
     return (
         <>
             <Navbar>
-                <Icons.logo />
+                <img src={image} width={110} height={40} onClick={() => navigation("/")} />
                 <Navbar__About>
                     <ul>
-                        <li>Главная</li>
+                        <li onClick={() => navigation("/")}>Главная</li>
                         <li>Филиалы</li>
                         <li>Вакансии</li>
                         <li>Новости</li>
@@ -61,7 +62,7 @@ export default function Layout() {
                 </Navbar__About>
                 <Navbar__Profile>
                     <Cart__Button className={cart.length ? "full" : ""} onClick={() => dispatch(updateState({ openDrawer: true }))}>
-                        <ShoppingOutlined /> Корзина
+                        <ShoppingOutlined /> {cart.length ? Intl.NumberFormat().format(cart.reduce((acc, curr) => acc += (curr.quantity * curr.price), 0)) + ` ${currency}` : "Корзина"}
                     </Cart__Button>
                     <Dropdown
                         menu={{
@@ -79,7 +80,7 @@ export default function Layout() {
             <Content>
                 <Outlet />
             </Content>
-            <Footer className='container_footer'>
+            <Footer className='container_footer' >
                 <div className='footer'>
                     <Icons.logo />
                     <Footer__About className='footer_about'>

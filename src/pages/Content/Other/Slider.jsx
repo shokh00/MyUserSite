@@ -2,14 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { ArrowsDiv, CarouselDiv } from "../../../style/styled-components/ui";
 import Slider from "react-slick";
 import { useState } from "react";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { LeftOutlined, MinusOutlined, PlusOutlined, RightOutlined } from "@ant-design/icons";
 import { updateState } from "../../../redux/slices";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function CustomSlider() {
     const dispatch = useDispatch();
-    const { products, store , cart } = useSelector(state => state.slices);
+    const { products, store, total } = useSelector(state => state.slices);
     const innerWidth = window.innerWidth;
     const [customArrow, setCustomArrow] = useState({ slickNext: null, slickPrev: null });
+    const navigate = useNavigate();
+    const cart = JSON.parse(localStorage.getItem("cart"));
+
+    console.log(cart);
 
     function addToCart(selectProduct) {
         let modCard = cart;
@@ -26,12 +32,48 @@ function CustomSlider() {
                 return i
             })
         } else {
-            modCard = [...cart, selectProduct];
+            modCard = [...cart, {...selectProduct , quantity: 1}];
         }
 
         dispatch(updateState({ cart: modCard }));
-        console.log(cart);
     }
+
+    const checkTotal = () => {
+        // const total =  cart.reduce(
+        //     (total, cartItem) => {
+        //         const { price, stock } = cartItem;
+        //         total.cartTotal += stock * price;
+        //         return total;
+        //     },
+        //     {
+        //         totalItems: 0,
+        //         cartTotal: 0
+        //     }
+        // );
+        // dispatch(updateState({ total: total }))
+    }
+
+    const Plus = (id) => {
+        let modCart = cart.map((i, index) => {
+            if (i.id === id)
+                i = { ...i, quantity: i.quantity + 1 }
+            return i
+        });
+        dispatch(updateState({ cart: modCart }));
+    };
+
+    const Minus = (id) => {
+        let modCart = cart.map((i, index) => {
+            if (i.quantity != 1) {
+                if (i.id === id)
+                    i = { ...i, quantity: i.quantity - 1 }
+            } else {
+                console.log("0");
+            }
+            return i;
+        });
+        dispatch(updateState({ cart: modCart }));
+    };
 
     const settings = {
         dots: false,
@@ -46,8 +88,8 @@ function CustomSlider() {
         <>
             <Slider {...settings} ref={c => setCustomArrow(c)}>
                 {products.map(item => (
-                    <CarouselDiv>
-                        <img src={item.image} alt="..." />
+                    <CarouselDiv key={item.id}>
+                        <img src={item.image} alt="..." onClick={() => navigate(`/product/${item.id}`)} />
                         <h2>
                             {item.productName}
                         </h2>
@@ -57,9 +99,17 @@ function CustomSlider() {
                         <h2 className='price'>
                             {new Intl.NumberFormat().format(item.price)} {store.currency}
                         </h2>
-                        <button onClick={() => addToCart(item)}>
-                            В корзину
-                        </button>
+                        {cart.some(p => p.id == item.id) ? <button className="counter">
+                            <MinusOutlined className="icon" onClick={() => Minus(item.id)} />
+                            {cart.find(i => i.id == item.id).quantity}
+                            <PlusOutlined className="icon" onClick={() => Plus(item.id)} />
+                        </button> : <>
+                            <button onClick={() => {
+                                addToCart(item);
+                            }} className="cart-btn">
+                                В корзину
+                            </button>
+                        </>}
                     </CarouselDiv>
                 ))}
             </Slider>

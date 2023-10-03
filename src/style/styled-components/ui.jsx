@@ -6,6 +6,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
 `;
 
 // Navbar
@@ -51,7 +52,7 @@ export const Navbar__About = styled.div`
         list-style: none;
         gap: 20px;
 
-        @media screen and (max-width: 719px) {
+        @media screen and (max-width: 795px) {
             display: none;
         }
 
@@ -251,11 +252,9 @@ export const Title = styled.div`
 
 export const CarouselDiv = styled.div`
     padding: 20px;
-    box-sizing: border-box;
     background-color: white;
     margin-bottom: 10px;
     border-radius: 6px;
-    overflow: hidden;
     transition: 300ms;
 
     &:hover {

@@ -38,12 +38,10 @@ const items = [
 ];
 
 export default function Layout() {
-    const { openDrawer, cart, store: {currency , image} } = useSelector(state => state.slices);
+    const { cart, store: {currency , image} } = useSelector(state => state.slices);
     // const cart = useState(JSON.parse(localStorage.getItem("cart")));
     const dispatch = useDispatch();
     const navigation = useNavigate();
-
-    console.log(currency);
 
     return (
         <>
@@ -60,8 +58,8 @@ export default function Layout() {
                     </ul>
                 </Navbar__About>
                 <Navbar__Profile>
-                    <Cart__Button className={cart.length ? "full" : ""} onClick={() => dispatch(updateState({ openDrawer: true }))}>
-                        <ShoppingOutlined /> {cart.length ? Intl.NumberFormat().format(cart.reduce((acc, curr) => acc += (curr.quantity * curr.price), 0)) + ` ${currency}` : "Корзина"}
+                    <Cart__Button className={cart?.length ? "full" : ""} onClick={() => dispatch(updateState({ openDrawer: true }))}>
+                        <ShoppingOutlined /> {cart?.length ? Intl.NumberFormat().format(cart.reduce((acc, curr) => acc += (curr.quantity * curr.price), 0)) + ` ${currency ?? "..."}` : "Корзина"}
                     </Cart__Button>
                     <Dropdown
                         menu={{

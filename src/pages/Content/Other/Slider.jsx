@@ -6,8 +6,7 @@ import { LeftOutlined, MinusOutlined, PlusOutlined, RightOutlined } from "@ant-d
 import { updateState } from "../../../redux/slices";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
-
+import { useWindowSize } from "@uidotdev/usehooks";
 
 function CustomSlider() {
     const dispatch = useDispatch();
@@ -15,6 +14,18 @@ function CustomSlider() {
     const innerWidth = window.innerWidth;
     const [customArrow, setCustomArrow] = useState({ slickNext: null, slickPrev: null });
     const navigate = useNavigate();
+    const size = useWindowSize();
+
+    console.log(size);
+
+    const settings = {
+        dots: false,
+        infinite: true,
+        // slidesToShow: innerWidth < 650 ? 1 : innerWidth < 850 ? 2 : innerWidth < 950 ? 3 : innerWidth < 2000 ? 4 : 5,
+        slidesToShow: size.width > 1000 ? 4 : size.width > 750 ? 3 : size.width > 550 ? 2 : 1,
+        autoplay: true,
+        speed: 550,
+    };
 
     function addToCart(selectProduct) {
         let modCard = cart;
@@ -60,16 +71,7 @@ function CustomSlider() {
         }).filter(i => i);
         dispatch(updateState({ cart: modCart }));
         localStorage.setItem('cart', JSON.stringify(modCart));
-    };
-
-    const settings = {
-        dots: false,
-        infinite: true,
-        slidesToShow: innerWidth < 650 ? 1 : innerWidth < 850 ? 2 : innerWidth < 950 ? 3 : innerWidth < 2000 ? 4 : 5,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 750,
-    };
+    }
 
     useEffect(() => {
         dispatch(updateState({cart: JSON.parse(localStorage.getItem('cart'))}));

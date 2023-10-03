@@ -61,7 +61,7 @@ export default function Layout() {
                 </Navbar__About>
                 <Navbar__Profile>
                     <Cart__Button className={cart.length ? "full" : ""} onClick={() => dispatch(updateState({ openDrawer: true }))}>
-                        <ShoppingOutlined /> {cart.length ? Intl.NumberFormat().format(cart.reduce((acc, curr) => acc += (curr.quantity * curr.price), 0)) + ` ${currency}` : "Корзина"}
+                        <ShoppingOutlined /> {cart.length ? Intl.NumberFormat().format(cart.reduce((acc, curr) => acc += (curr.quantity * curr.price), 0)) + ` ${currency ?? "..."}` : "Корзина"}
                     </Cart__Button>
                     <Dropdown
                         menu={{

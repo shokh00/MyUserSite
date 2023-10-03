@@ -29,14 +29,20 @@ export default function Home() {
         });
         dispatch(updateState({ cart: modCart }));
     };
-
+    
     const Minus = (id) => {
         let modCart = cart.map((i, index) => {
-            if (i.id === id)
-                i = { ...i, quantity: i.quantity - 1 }
-            return i
-        });
+            if (i.id === id) {
+                if (i.quantity <= 1) {
+                    return;
+                } else {
+                    i = { ...i, quantity: i.quantity - 1 }
+                }             
+            }
+            return i;
+        }).filter(i => i);
         dispatch(updateState({ cart: modCart }));
+        localStorage.setItem('cart', JSON.stringify(modCart));
     };
 
     console.log(cart);

@@ -16,11 +16,11 @@ function CustomModal() {
             total: "number",
             orderMode: typeOfDelivery,
 
-            
+
         };
 
         if (newValue == "PICKUP") {
-            
+
         }
 
         console.log(newValue);
@@ -28,6 +28,7 @@ function CustomModal() {
 
     return (
         <Modal
+            style={{ top: 20 }}
             width={400}
             open={openModal}
             onOk={() => dispatch(updateState({ openModal: !openModal }))}
@@ -42,11 +43,11 @@ function CustomModal() {
                     <Form.Item label="Имя" name={"name"} rules={[{ required: true, message: "Checking is required" }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item label="Номер телефона"  name={"phone"} rules={[{ required: true, message: "Checking is required" }]}>
+                    <Form.Item label="Номер телефона" name={"phone"} rules={[{ required: true, message: "Checking is required" }]}>
                         <Input addonBefore="+998" />
                     </Form.Item>
                     <Select
-                        
+
                         style={{
                             margin: "0 0 15px 0",
                             width: "100%"

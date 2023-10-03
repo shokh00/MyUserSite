@@ -7,15 +7,14 @@ import { updateState } from "../../../redux/slices";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+
+
 function CustomSlider() {
     const dispatch = useDispatch();
-    const { products, store, total } = useSelector(state => state.slices);
+    const { products, store, cart } = useSelector(state => state.slices);
     const innerWidth = window.innerWidth;
     const [customArrow, setCustomArrow] = useState({ slickNext: null, slickPrev: null });
     const navigate = useNavigate();
-    const cart = JSON.parse(localStorage.getItem("cart"));
-
-    console.log(cart);
 
     function addToCart(selectProduct) {
         let modCard = cart;
@@ -34,23 +33,8 @@ function CustomSlider() {
         } else {
             modCard = [...cart, {...selectProduct , quantity: 1}];
         }
-
         dispatch(updateState({ cart: modCard }));
-    }
-
-    const checkTotal = () => {
-        // const total =  cart.reduce(
-        //     (total, cartItem) => {
-        //         const { price, stock } = cartItem;
-        //         total.cartTotal += stock * price;
-        //         return total;
-        //     },
-        //     {
-        //         totalItems: 0,
-        //         cartTotal: 0
-        //     }
-        // );
-        // dispatch(updateState({ total: total }))
+        localStorage.setItem('cart', JSON.stringify(modCard));
     }
 
     const Plus = (id) => {
@@ -60,19 +44,22 @@ function CustomSlider() {
             return i
         });
         dispatch(updateState({ cart: modCart }));
+        localStorage.setItem('cart', JSON.stringify(modCart));
     };
 
     const Minus = (id) => {
         let modCart = cart.map((i, index) => {
-            if (i.quantity != 1) {
-                if (i.id === id)
+            if (i.id === id) {
+                if (i.quantity <= 1) {
+                    return;
+                } else {
                     i = { ...i, quantity: i.quantity - 1 }
-            } else {
-                console.log("0");
+                }             
             }
             return i;
-        });
+        }).filter(i => i);
         dispatch(updateState({ cart: modCart }));
+        localStorage.setItem('cart', JSON.stringify(modCart));
     };
 
     const settings = {
@@ -83,6 +70,10 @@ function CustomSlider() {
         autoplay: true,
         speed: 750,
     };
+
+    useEffect(() => {
+        dispatch(updateState({cart: JSON.parse(localStorage.getItem('cart'))}));
+    }, []);
 
     return (
         <>
@@ -99,7 +90,7 @@ function CustomSlider() {
                         <h2 className='price'>
                             {new Intl.NumberFormat().format(item.price)} {store.currency}
                         </h2>
-                        {cart.some(p => p.id == item.id) ? <button className="counter">
+                        {cart?.some(p => p.id == item.id) ? <button className="counter">
                             <MinusOutlined className="icon" onClick={() => Minus(item.id)} />
                             {cart.find(i => i.id == item.id).quantity}
                             <PlusOutlined className="icon" onClick={() => Plus(item.id)} />

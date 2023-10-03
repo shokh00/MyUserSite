@@ -30,7 +30,7 @@ function CustomSlider() {
                     }
                 }
                 return i
-            })
+            });
         } else {
             modCard = [...cart, {...selectProduct , quantity: 1}];
         }

@@ -3,7 +3,6 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import * as Icons from "../icons/index";
 import { UserOutlined, ShoppingOutlined, DownOutlined, InstagramOutlined, FacebookOutlined, SendOutlined } from '@ant-design/icons';
 import { Dropdown } from 'antd';
-import { useState } from 'react';
 import { updateState } from '../redux/slices';
 import { useDispatch, useSelector } from 'react-redux';
 

@@ -1,10 +1,11 @@
-import { Footer, Footer__About, Navbar, Navbar__About, Navbar__Profile, Line, ContactUs, Content, Cart__Button } from '../style/styled-components/ui'
 import { Outlet, useNavigate } from 'react-router-dom'
-import * as Icons from "../icons/index";
 import { UserOutlined, ShoppingOutlined, DownOutlined, InstagramOutlined, FacebookOutlined, SendOutlined } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { updateState } from '../redux/slices';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { Footer, Footer__About, Navbar, Navbar__About, Navbar__Profile, Line, ContactUs, Content, Cart__Button } from '../style/styled-components/ui'
+import * as Icons from "../icons/index";
 
 const items = [
     {
@@ -38,12 +39,9 @@ const items = [
 ];
 
 export default function Layout() {
-    const { openDrawer, cart, store: {currency , image} } = useSelector(state => state.slices);
-    // const cart = useState(JSON.parse(localStorage.getItem("cart")));
+    const { cart, store: {currency , image} } = useSelector(state => state.slices);
     const dispatch = useDispatch();
     const navigation = useNavigate();
-
-    console.log(currency);
 
     return (
         <>
@@ -60,8 +58,8 @@ export default function Layout() {
                     </ul>
                 </Navbar__About>
                 <Navbar__Profile>
-                    <Cart__Button className={cart.length ? "full" : ""} onClick={() => dispatch(updateState({ openDrawer: true }))}>
-                        <ShoppingOutlined /> {cart.length ? Intl.NumberFormat().format(cart.reduce((acc, curr) => acc += (curr.quantity * curr.price), 0)) + ` ${currency ?? "..."}` : "Корзина"}
+                    <Cart__Button className={cart?.length ? "full" : ""} onClick={() => dispatch(updateState({ openDrawer: true }))}>
+                        <ShoppingOutlined /> {cart?.length ? Intl.NumberFormat().format(cart.reduce((acc, curr) => acc += (curr.quantity * curr.price), 0)) + ` ${currency ?? "..."}` : "Корзина"}
                     </Cart__Button>
                     <Dropdown
                         menu={{

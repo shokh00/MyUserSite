@@ -6,6 +6,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
 `;
 
 // Navbar
@@ -51,7 +52,7 @@ export const Navbar__About = styled.div`
         list-style: none;
         gap: 20px;
 
-        @media screen and (max-width: 719px) {
+        @media screen and (max-width: 795px) {
             display: none;
         }
 
@@ -236,9 +237,66 @@ export const Content = styled.div`
     .oneProduct {
         width: 100%;
         height: 70vh;
-        border: 1px solid red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 25px;
+
+        .card_container {
+            max-width: 90%;
+            display: flex;
+            justify-content: center;
+
+            .img_side {
+                width: 50%;
+                display: flex;
+                justify-content: center;
+
+                img {
+                    width: 200px;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+
+            .text_side {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: start;
+
+                h4 {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+                }
+
+                button {
+                    background-color: #19A555;
+                    border: 0;
+                    font-size: 15px;
+                    padding: 13px 10px;
+                    color: white;
+                    border-radius: 3px;
+                    transition: 150ms;
+                    width: fit-content;
+                    margin-top: 10px;
+                    span {
+                        margin-left: 15px;
+                    }
+
+                        &:hover {
+                            background-color:rgba(25, 165, 85, 0.85)
+                        }
+                }
+            }
+        }
     }
 `;
+
 export const Title = styled.div`
     width: 100%;
     text-align: center;
@@ -251,11 +309,9 @@ export const Title = styled.div`
 
 export const CarouselDiv = styled.div`
     padding: 20px;
-    box-sizing: border-box;
     background-color: white;
     margin-bottom: 10px;
     border-radius: 6px;
-    overflow: hidden;
     transition: 300ms;
 
     &:hover {
@@ -293,7 +349,9 @@ export const CarouselDiv = styled.div`
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
     }
-    .cart-btn {
+`;
+
+export const AddToCardBtn = styled.button`
         width: 100%;
         margin: 15px 0 0 0;
         padding: 10px 0;
@@ -310,9 +368,10 @@ export const CarouselDiv = styled.div`
         &:hover {
             background-color: yellow;
         }
-    }
-    .counter {
-        margin-top: 15px;
+`;
+
+export const Counter = styled.button`
+     margin-top: 15px;
         height: 45px;
         width: 100%;
 
@@ -334,8 +393,7 @@ export const CarouselDiv = styled.div`
                 background-color: gold;
             }
         }
-    }
-`;
+`
 
 export const Block = styled.div`
     width: 100%;
@@ -414,6 +472,57 @@ export const Block = styled.div`
         }
     }
 `;
+
+export const ProductDiv = styled.div`
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+
+    div {
+        width: calc((100% / 4) - 25px);
+        padding: 15px 10px;
+        border-radius: 6px;    
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        position:relative;
+
+        img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        h4 {
+            margin-top: 10px;
+            color: gray;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        h3 {
+            color: green;
+            margin-top: 10px;
+        }
+
+        @media screen and (max-width: 450px) {
+            width: 100%;
+        }
+
+        @media (min-width:450px) and (max-width: 700px) {
+            width: calc((100% / 2) - 15px);
+            padding: 5px;
+        }
+
+        @media (min-width: 700px) and (max-width: 950px) {
+            width: calc((100% / 3) - 25px);
+        }
+    }
+`
 
 // Drawer
 

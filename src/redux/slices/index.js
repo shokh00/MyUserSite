@@ -3,12 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const slice = createSlice({
     name: "products",
     initialState: {
+        oneProduct: {},
         products: [],
-        openDrawer: false,
-        openModal: false,
         store: [],
         cart: [],
-        total: 0
+        total: 0,
+        openModal: false,
+        openDrawer: false,
     },
     reducers: {
         updateState: (state, action) => {

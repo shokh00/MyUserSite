@@ -1,9 +1,14 @@
-import * as Icons from "../../../icons";
-import { Block } from "../../../style/styled-components/ui";
+import * as Icons from "../../icons";
+import { Block, Title } from "../../style/styled-components/ui";
 
 function CustomBlock() {
     return (
         <Block>
+            <Title>
+                <h1>
+                    Почему Эвос?
+                </h1>
+            </Title>
             <div className="box">
                 <Icons.shield />
                 <h2>

@@ -1,27 +1,20 @@
-import { Button, Form, Input, Modal, Select } from "antd";
-import { Modal__Content } from "../../../style/styled-components/ui";
-import { useDispatch, useSelector } from "react-redux";
-import { updateState } from "../../../redux/slices";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { Button, DatePicker, Form, Input, Modal, Select } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Modal__Content } from "../../style/styled-components/ui";
+import { updateState } from "../../redux/slices";
 
 function CustomModal() {
     const { openModal } = useSelector(state => state.slices);
     const dispatch = useDispatch();
     const [form] = Form.useForm();
-    const [typeOfDelivery, setTypeOfDelivery] = useState("PICKUP")
+    const [typeOfDelivery, setTypeOfDelivery] = useState("PICKUP");
+    const dateFormat = 'YYYY/MM/DD';
 
     const onFinish = value => {
-        let newValue = {
-            total: "number",
-            orderMode: typeOfDelivery,
-
-
-        };
-
-        if (newValue == "PICKUP") {
-
-        }
+        let newValue = {}
 
         console.log(newValue);
     }
@@ -47,7 +40,6 @@ function CustomModal() {
                         <Input addonBefore="+998" />
                     </Form.Item>
                     <Select
-
                         style={{
                             margin: "0 0 15px 0",
                             width: "100%"
@@ -70,7 +62,7 @@ function CustomModal() {
                     {
                         typeOfDelivery == "PICKUP" ?
                             <Form.Item label="Время доставки" name={"pickupTime"} rules={[{ required: true, message: "Checking is required" }]}>
-                                <Input />
+                                <DatePicker format={dateFormat} />
                             </Form.Item>
                             :
                             <>

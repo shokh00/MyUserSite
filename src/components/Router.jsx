@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from '../pages/Layout'
-import Home from '../pages/Content/Home'
-import OneProductPage from '../pages/Content/Other/OneProductPage'
+import Home from '../pages/Home'
+import OneProductPage from '../pages/Content/OneProductPage'
 
 export default function Router() {
     return (

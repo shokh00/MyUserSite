@@ -15,7 +15,7 @@ const ProductList = () => {
                 {
                     products.map(item => {
                         return (
-                            <div>
+                            <div key={item.id}>
                                 <img src={item.image} alt="" />
                                 <h2>{item.productName}</h2>
                                 <h4>{item.description}</h4>

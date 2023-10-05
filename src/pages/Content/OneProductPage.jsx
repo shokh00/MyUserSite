@@ -14,8 +14,6 @@ export default function OneProductPage() {
     dispatch(getOneProduct(id))
   }, []);
 
-  console.log(oneProduct);
-
   return (
     <div className='oneProduct'>
       <Card>

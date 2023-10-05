@@ -14,9 +14,8 @@ function CustomModal() {
     const dateFormat = 'YYYY/MM/DD';
 
     const onFinish = value => {
-        let newValue = {}
-
-        console.log(newValue);
+        // let newValue = {}
+        console.log(value);
     }
 
     return (
@@ -30,7 +29,7 @@ function CustomModal() {
         >
             <Modal__Content>
                 <h1>
-                    Вход на сайт
+                    Оформить заказ
                 </h1>
                 <Form form={form} layout='vertical' onFinish={onFinish} >
                     <Form.Item label="Имя" name={"name"} rules={[{ required: true, message: "Checking is required" }]}>
@@ -39,13 +38,14 @@ function CustomModal() {
                     <Form.Item label="Номер телефона" name={"phone"} rules={[{ required: true, message: "Checking is required" }]}>
                         <Input addonBefore="+998" />
                     </Form.Item>
+                    <Form.Item label="Type Of Delivery" name={"typeOfDelivery"}>
                     <Select
                         style={{
                             margin: "0 0 15px 0",
                             width: "100%"
                         }}
                         defaultValue="PICKUP"
-                        onChange={(value) => setTypeOfDelivery(value)}
+                        onChange={setTypeOfDelivery}
                         options={[
                             {
                                 value: 'PICKUP',
@@ -59,6 +59,7 @@ function CustomModal() {
                     >
 
                     </Select>
+                    </Form.Item>
                     {
                         typeOfDelivery == "PICKUP" ?
                             <Form.Item label="Время доставки" name={"pickupTime"} rules={[{ required: true, message: "Checking is required" }]}>

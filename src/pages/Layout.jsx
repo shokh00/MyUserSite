@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Footer, Footer__About, Navbar, Navbar__About, Navbar__Profile, Line, ContactUs, Content, Cart__Button } from '../style/styled-components/ui'
 import * as Icons from "../icons/index";
-import { useScrollTo } from '../components/hook';
 
 const items = [
     {
@@ -43,8 +42,6 @@ export default function Layout() {
     const { cart, store: { currency, image } } = useSelector(state => state.slices);
     const dispatch = useDispatch();
     const navigation = useNavigate();
-
-    console.log();
 
     return (
         <>

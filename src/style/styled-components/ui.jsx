@@ -477,7 +477,9 @@ export const ProductDiv = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 25px;
+    /* gap: 25px; */
+    justify-content: space-between;
+    gap: 20px 0;
 
     div {
         width: calc((100% / 4) - 25px);

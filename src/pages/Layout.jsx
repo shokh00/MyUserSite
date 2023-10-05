@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Footer, Footer__About, Navbar, Navbar__About, Navbar__Profile, Line, ContactUs, Content, Cart__Button } from '../style/styled-components/ui'
 import * as Icons from "../icons/index";
+import { useScrollTo } from '../components/hook';
 
 const items = [
     {
@@ -39,9 +40,11 @@ const items = [
 ];
 
 export default function Layout() {
-    const { cart, store: {currency , image} } = useSelector(state => state.slices);
+    const { cart, store: { currency, image } } = useSelector(state => state.slices);
     const dispatch = useDispatch();
     const navigation = useNavigate();
+
+    console.log();
 
     return (
         <>
@@ -49,7 +52,7 @@ export default function Layout() {
                 <img src={image} width={110} height={40} onClick={() => navigation("/")} />
                 <Navbar__About>
                     <ul>
-                        <li onClick={() => navigation("/")}>Главная</li>
+                        <li onClick={() => { window.location.pathname == "/" ? window.scrollTo(0, 0) : navigation("/") }}>Главная</li>
                         <li>Филиалы</li>
                         <li>Вакансии</li>
                         <li>Новости</li>
@@ -82,7 +85,7 @@ export default function Layout() {
                     <Icons.logo />
                     <Footer__About className='footer_about'>
                         <ul>
-                            <li>Главная</li>
+                            <li onClick={() => window.scrollTo(0, 0)}>Главная</li>
                             <li>Филиалы</li>
                             <li>Вакансии</li>
                             <li>Новости</li>
